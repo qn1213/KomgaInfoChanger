@@ -8,6 +8,7 @@ namespace KomgaInfoChanger
 {
     internal class env
     {
+        // 로그파일 경로
         public static string logPath {get; set;}
     }
 }
