@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RestSharp;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace KomgaInfoChanger
 {
