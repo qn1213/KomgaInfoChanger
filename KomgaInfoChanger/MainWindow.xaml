@@ -7,10 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="33,21,0,0" TextWrapping="Wrap" Text="대충 IP" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="33,47,0,0" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="33,70,0,0" TextWrapping="Wrap" Text="PW" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="33,95,0,0" VerticalAlignment="Top" Height="42" Width="120"/>
+
 
     </Grid>
 </Window>

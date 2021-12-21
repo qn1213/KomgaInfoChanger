@@ -19,6 +19,15 @@ namespace KomgaInfoChanger
             return ret;
         }
 
+        public static string GetBasicAuthBase64(string _id, string _pw)
+        {
+            string id = EncodeBase64(_id);
+            string pw = EncodeBase64(_pw);
+            string seperate = EncodeBase64(":");
+
+            return id + seperate + pw;
+        }
+
         public static string GetDate()
         {
             DateTime nowDate = DateTime.Now;

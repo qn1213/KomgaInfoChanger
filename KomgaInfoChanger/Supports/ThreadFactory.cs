@@ -77,6 +77,7 @@ namespace KomgaInfoChanger
             {
                 thread = new Thread(Worker);
                 thread.IsBackground = true;
+                thread.Priority = ThreadPriority.BelowNormal;
                 thread.Start();
             }
         }
