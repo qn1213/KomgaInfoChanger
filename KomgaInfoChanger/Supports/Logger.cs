@@ -11,12 +11,18 @@ namespace KomgaInfoChanger
 
         private QueueFactory<string> loggers;
 
-        private string filePath = env.logPath + Helper.GetDate() + "_InfoChangerLog.txt";
+        private string filePath;
 
         private readonly object _fileLock = new object();
 
         private Logger()
         {
+            if (filePath == null)
+            {
+                env.logPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\";
+            }
+            filePath = env.logPath + Helper.GetDate() + "_InfoChangerLog.txt";
+
             if (!File.Exists(filePath))
                 using (File.Create(filePath)) { }
 

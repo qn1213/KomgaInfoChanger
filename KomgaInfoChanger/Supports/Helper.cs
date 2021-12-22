@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace KomgaInfoChanger
 {
@@ -8,7 +9,7 @@ namespace KomgaInfoChanger
         public static string EncodeBase64(string _value)
         {
             byte[] bytes = Encoding.Unicode.GetBytes(_value);
-            string base64 = Convert.ToBase64String(bytes); 
+            string base64 = Convert.ToBase64String(bytes);
             return base64;
         }
 
@@ -21,11 +22,10 @@ namespace KomgaInfoChanger
 
         public static string GetBasicAuthBase64(string _id, string _pw)
         {
-            string id = EncodeBase64(_id);
-            string pw = EncodeBase64(_pw);
-            string seperate = EncodeBase64(":");
+            var byteAry = Encoding.ASCII.GetBytes($"{_id}:{_pw}");
+            var authHeader = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteAry));
 
-            return id + seperate + pw;
+            return authHeader.ToString();
         }
 
         public static string GetDate()
@@ -43,6 +43,13 @@ namespace KomgaInfoChanger
         public static string GetDateTime()
         {
             return GetDate() + ":" + GetTime();
+        }
+
+        public static int GetInt(string value)
+        {
+            if (Int32.TryParse(value, out int val))
+                return val;
+            else return -1;
         }
     }
 

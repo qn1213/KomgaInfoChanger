@@ -10,6 +10,7 @@ namespace KomgaInfoChanger
         Thread thread;
 
         bool isStop;
+        bool isBackground;
 
         // 외부에서 실행할 작업
         public event EventHandler<QueueThreadEventArgs<T>> DoingJob;
@@ -25,10 +26,11 @@ namespace KomgaInfoChanger
                 return queue.Count;
         }
 
-        public QueueFactory()
+        public QueueFactory(bool isBackground = true) // 백그라운드로 돌릴건지 (기본 true)
         {
             queue = new ConcurrentQueue<T>();
             thread = new Thread(Worker);
+            this.isBackground = isBackground;
         }
 
         private void Worker()
@@ -76,7 +78,7 @@ namespace KomgaInfoChanger
             if (!thread.IsAlive)
             {
                 thread = new Thread(Worker);
-                thread.IsBackground = true;
+                thread.IsBackground = isBackground;
                 thread.Priority = ThreadPriority.BelowNormal;
                 thread.Start();
             }

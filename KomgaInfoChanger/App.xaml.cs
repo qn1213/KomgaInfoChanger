@@ -1,36 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿#define DEBUG
+
 using System.Windows;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 
 namespace KomgaInfoChanger
 {
-    /// <summary>
-    /// App.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class App : Application
     {
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
-            //Window login = new LoginWindow();
-            //login.Show();
+#if DEBUG
+            Logger log = Logger.GetInstance;
 
-            //RestAPI.ApiSender.Send();
+            env.info.serverAddr = "https://naver.com";            
+            env.info.serverID = "apisendTest";
+            env.info.serverPW = "2";
 
-            Dictionary<string,string> headers = new Dictionary<string,string>();
-            headers.Add("Authorization", "");
-            string res = RestAPI.ApiSender.Request<string>(Method.GET, "주소!", "에피아이 경로!", headers);
+            Protocols.ReqSetCookie_test req = new Protocols.ReqSetCookie_test();
 
-            JObject obj = JObject.Parse(res);
+            if(!req.Request())
+                log.AddLog(req.res.status + " : " + req.res.error + " :" + req.res.message);
+            else
+                log.AddLog("로그인 성공");
 
-            string status = obj.GetValue("status").ToString();
-            string error = obj.GetValue("error").ToString();
-            string message = obj.GetValue("message").ToString();
+#else
+            Window login = new LoginWindow();
+            login.Show();
+
+            RestAPI.ApiSender.Send();
+#endif
         }
     }
 }

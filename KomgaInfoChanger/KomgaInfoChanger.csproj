@@ -68,8 +68,9 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Protocols\ProtocolDefine.cs" />
+    <Compile Include="Protocols\ReqSetCookie_test.cs" />
     <Compile Include="RestAPI\ApiSender.cs" />
-    <Compile Include="RestAPI\Protocols\ReqSetCookie_TestOnly.cs" />
     <Compile Include="Supports\env.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
     <Page Include="LoginWindow.xaml">
