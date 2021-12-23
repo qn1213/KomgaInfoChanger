@@ -4,31 +4,28 @@ using Newtonsoft.Json.Linq;
 
 namespace KomgaInfoChanger.Protocols
 {
-    internal class ReqSetCookie_test
+    internal class ReqSetCookie
     {
         private const string api = "/api/v1/login/set-cookie";
 
         public ResSetCookie_test res;
         private Dictionary<string, string> header;
 
-        protected string authInfo;
-
-        public ReqSetCookie_test()
+        public ReqSetCookie()
         {
-            authInfo = Helper.GetBasicAuthBase64(env.info.serverID, env.info.serverPW);
+            env.basicAuthInfo = Helper.GetBasicAuthBase64(env.info.serverID, env.info.serverPW);
 
             header = new Dictionary<string, string>();
-            header.Add(env.AUTH_PREFIX_, authInfo);
+            header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
 
             res = new ResSetCookie_test();
         }
 
         public bool Request()
         {
-            //string ret = RestAPI.ApiSender.Request<string>(Method.GET, env.info.serverAddr, api, header);
             string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
-                        
-            if (ret == null)
+
+            if (string.IsNullOrEmpty(ret))
                 return true;
             else
             {
@@ -37,7 +34,7 @@ namespace KomgaInfoChanger.Protocols
                 res.error = obj.GetValue("error").ToString();
                 res.message = obj.GetValue("message").ToString();
                 return false;
-            }       
+            }
         }
     }
 

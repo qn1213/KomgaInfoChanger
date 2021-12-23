@@ -65,11 +65,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infos\BookInfos.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Protocols\ProtocolDefine.cs" />
-    <Compile Include="Protocols\ReqSetCookie_test.cs" />
+    <Compile Include="Protocols\ReqBooksInfo.cs" />
+    <Compile Include="Protocols\ReqSetCookie.cs" />
     <Compile Include="RestAPI\ApiSender.cs" />
     <Compile Include="Supports\env.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
