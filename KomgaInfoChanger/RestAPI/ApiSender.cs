@@ -30,7 +30,7 @@ namespace KomgaInfoChanger.RestAPI
             }
 
             var response = restClient.Execute(request);
-            if (response.ContentType != "application/json")
+            if (response.ContentType != "" && response.ContentType != "application/json")
             {
                 JObject json = new JObject();
                 json.Add("status", "1000");
