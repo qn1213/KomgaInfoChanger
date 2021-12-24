@@ -2,32 +2,25 @@
 
 namespace KomgaInfoChanger.Infos
 {
-    // 서버 -> 클라이언트 : 북 정보 받아오는 클래스
-    public struct SAttribute
-    {
-        public string id;           // => [id]
-        public string seriesId;     // => [seriesId]
-        public string libraryId;    // => [libraryId]
-        //public string name;         // => [name]
-        public string mediaType;    // => [media][mediaType]
-    }
+    // 클라이언트의 zip파일 정보 받아오는 클래스
+
     internal class BookInfos
     {
         // <File Name, Info>
-        private ConcurrentDictionary<string, SAttribute> books;
+        private ConcurrentDictionary<string, SBookAttribute> books;
 
         public BookInfos()
         {
-            books = new ConcurrentDictionary<string, SAttribute>();
+            books = new ConcurrentDictionary<string, SBookAttribute>();
         }
 
-        public ConcurrentDictionary<string, SAttribute> GetBooks()
+        public ConcurrentDictionary<string, SBookAttribute> GetBooks()
         {
             return books;
         }
 
         // _name => File Name(Without .zip)
-        public bool AddBook(string _name, SAttribute attribute)
+        public bool AddBook(string _name, SBookAttribute attribute)
         {
             if(books == null || !books.ContainsKey(_name))
             {
