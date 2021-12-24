@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
@@ -31,11 +32,15 @@ namespace KomgaInfoChanger
                                 */
                                 
                                 fileAtri.number = GetString(test[0]);
-                                fileAtri.title = GetString(test[1]);
-                                fileAtri.authors = GetArrayString(test[2]);
-                                fileAtri.tags = GetArrayString(test[3]);
+                                fileAtri.title = GetString(test[1]);                                
+                                fileAtri.atrist = GetArrayString(test[2]);
+                                fileAtri.group = GetArrayString(test[3]);
+                                fileAtri.type = GetString(test[4]);
+                                fileAtri.series = GetArrayString(test[5]);
+                                fileAtri.character = GetArrayString(test[6]);
+                                fileAtri.tag = GetDictonaryString(test[7]);
+                                fileAtri.language = GetString(test[8]);
 
-                                //Console.WriteLine(name);
                                 return fileAtri;
                             }
                         }
@@ -57,6 +62,21 @@ namespace KomgaInfoChanger
             string[] data2 = data1[1].Split(new string[] { ", "}, StringSplitOptions.None);
 
             return data2;
+        }
+
+        private Dictionary<string, string> GetDictonaryString(string str)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+
+            string[] data1 = str.Split(new string[] { ": " }, StringSplitOptions.None);           
+            string[] data2 = data1[1].Split(new string[] { ", " }, StringSplitOptions.None);
+            
+            foreach(string value in data2)
+            {
+                data.Add(data1[0], value);
+            }
+
+            return data;
         }
     }
 }
