@@ -29,17 +29,17 @@ namespace KomgaInfoChanger
                                     {
                                         // test[i]\r\n UI 호출해서 뿌려주면됨
                                     }
-                                */
+                                */                                
                                 
-                                fileAtri.number = GetString(test[0]);
-                                fileAtri.title = GetString(test[1]);                                
-                                fileAtri.atrist = GetArrayString(test[2]);
-                                fileAtri.group = GetArrayString(test[3]);
-                                fileAtri.type = GetString(test[4]);
-                                fileAtri.series = GetArrayString(test[5]);
-                                fileAtri.character = GetArrayString(test[6]);
-                                fileAtri.tag = GetDictonaryString(test[7]);
-                                fileAtri.language = GetString(test[8]);
+                                //fileAtri.number = GetString(test[0]);
+                                //fileAtri.title = GetString(test[1]);                                
+                                //fileAtri.atrist = GetArrayString(test[2]);
+                                //fileAtri.group = GetArrayString(test[3]);
+                                //fileAtri.type = GetString(test[4]);
+                                //fileAtri.series = GetArrayString(test[5]);
+                                //fileAtri.character = GetArrayString(test[6]);
+                                //fileAtri.tag = GetDictonaryString(test[7]);
+                                //fileAtri.language = GetString(test[8]);
 
                                 return fileAtri;
                             }
@@ -47,6 +47,11 @@ namespace KomgaInfoChanger
                     }
                 }
             } 
+
+            Dictionary<string, string> testDic = new Dictionary<string, string>();
+            testDic.Add("role", "Lang");
+            testDic.Add("name", "Korean");
+
             return fileAtri;
         }
 

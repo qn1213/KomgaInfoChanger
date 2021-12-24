@@ -33,10 +33,10 @@ namespace KomgaInfoChanger
 
             ArchiveLoader loader = new ArchiveLoader();
             SMetaDataAttribute temp = loader.GetInfoFromFile(@"C:\SMB\test.zip");
-            string authors = string.Join(",", temp.authors);
-            string tags = string.Join (",", temp.tags);
+            ////string authors = string.Join(",", temp.authors);
+            ////string tags = string.Join (",", temp.tags);
 
-            log.AddLog(temp.number + ", " + temp.title + ", " + authors + ", " + tags);
+            //log.AddLog(temp.number + ", " + temp.title + ", " + authors + ", " + tags);
             
 #else
 
