@@ -16,11 +16,11 @@ namespace KomgaInfoChanger.Protocols
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
         }
 
-        public ConcurrentDictionary<string, Infos.SAttribute> Request()
+        public ConcurrentDictionary<string, SBookAttribute> Request()
         {
             string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
 
-            ConcurrentDictionary<string, Infos.SAttribute> tmp = new ConcurrentDictionary<string, Infos.SAttribute>();
+            ConcurrentDictionary<string, SBookAttribute> tmp = new ConcurrentDictionary<string, SBookAttribute>();
 
             JObject jObj = JObject.Parse(ret);
             foreach(var item in jObj)
@@ -31,7 +31,7 @@ namespace KomgaInfoChanger.Protocols
                     foreach(var item2 in item.Value)
                     {
                         string k2 = item2.ToString();
-                        Infos.SAttribute tmpAtri;
+                        SBookAttribute tmpAtri;
                         JObject fJobj = JObject.Parse(k2);
 
                         tmpAtri.id = fJobj.GetValue("id").ToString();
@@ -42,7 +42,7 @@ namespace KomgaInfoChanger.Protocols
                         JObject fJobj2 = JObject.Parse(metaData);
                         tmpAtri.mediaType = fJobj2.GetValue("mediaType").ToString();
                         
-                        tmp.TryAdd(fJobj.GetValue("id").ToString(), tmpAtri);
+                        tmp.TryAdd(fJobj.GetValue("name").ToString(), tmpAtri);
                     }
                     break;
                 }
