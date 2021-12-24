@@ -16,18 +16,6 @@ namespace KomgaInfoChanger.Protocols
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
         }
 
-        //public bool Request()
-        //{
-        //    string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
-
-        //    //JArray jArray = JArray.Parse(ret);
-        //    JObject jObj = JObject.Parse(ret);
-        //    JToken jToken = jObj;
-            
-
-        //    return true;
-        //}
-
         public ConcurrentDictionary<string, Infos.SAttribute> Request()
         {
             string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
@@ -56,15 +44,9 @@ namespace KomgaInfoChanger.Protocols
                         
                         tmp.TryAdd(fJobj.GetValue("id").ToString(), tmpAtri);
                     }
+                    break;
                 }
             }
-
-            List<string> list2 = new List<string>();
-            foreach(var item in tmp)
-            {
-                list2.Add(item.Value.id);
-            }
-
             return tmp;
         }
     }
