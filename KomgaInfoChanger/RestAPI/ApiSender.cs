@@ -2,6 +2,7 @@
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using KomgaInfoChanger.Protocols;
+using System;
 
 namespace KomgaInfoChanger.RestAPI
 {
@@ -49,6 +50,7 @@ namespace KomgaInfoChanger.RestAPI
                 response.Content = json.ToString();
             }
 
+            Console.WriteLine(response.ResponseStatus + " - " + response.StatusCode);
             return response.Content;
         }
 

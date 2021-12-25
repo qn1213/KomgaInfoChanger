@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Protocols\ProtocolDefine.cs" />
     <Compile Include="Protocols\ReqBooksInfo.cs" />
+    <Compile Include="Protocols\ReqPatchBooksMeta.cs" />
     <Compile Include="Protocols\ReqSetCookie.cs" />
     <Compile Include="RestAPI\ApiSender.cs" />
     <Compile Include="Infos\Attributes.cs" />

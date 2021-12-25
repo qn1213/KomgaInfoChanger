@@ -11,11 +11,14 @@ namespace KomgaInfoChanger
 #if DEBUG
             Logger log = Logger.GetInstance;
 
-            env.info.serverAddr = "https://naver.com";
-            env.info.serverID = "a@naver.com";
-            env.info.serverPW = "a!";
-
-            //Protocols.ReqSetCookie req = new Protocols.ReqSetCookie();
+            env.info.serverAddr = "n/a";
+            env.info.serverID = "n/a";
+            env.info.serverPW = "n/a";
+            Protocols.ReqSetCookie req = new Protocols.ReqSetCookie();
+            
+            Protocols.ReqPatchBooksMeta reqPatch = new Protocols.ReqPatchBooksMeta();
+            reqPatch.Request("{\"076YPGEHQCH4F\":{\"tags\":[\"tags1\",\"tag2\"],\"authors\":[{\"role\":\"Lang\",\"name\":\"Korean\"},{\"role\":\"number\",\"name\":\"9999\"},{\"role\":\"type\",\"name\":\"test\"},{\"role\":\"role1\",\"name\":\"na1\"},{\"role\":\"role2\",\"name\":\"na2\"}]}}");
+            
 
             //if(!req.Request())
             //    log.AddLog(req.res.status + " : " + req.res.error + " :" + req.res.message);
@@ -31,8 +34,8 @@ namespace KomgaInfoChanger
             //}
 
 
-            ArchiveLoader loader = new ArchiveLoader();
-            SMetaDataAttribute temp = loader.GetInfoFromFile(@"C:\SMB\test.zip");
+            //ArchiveLoader loader = new ArchiveLoader();
+            //SMetaDataAttribute temp = loader.GetInfoFromFile(@"C:\SMB\test.zip");
             ////string authors = string.Join(",", temp.authors);
             ////string tags = string.Join (",", temp.tags);
 
