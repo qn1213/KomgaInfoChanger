@@ -11,9 +11,11 @@ namespace KomgaInfoChanger
 #if DEBUG
             Logger log = Logger.GetInstance;
 
-            env.info.serverAddr = "n/a";
-            env.info.serverID = "n/a";
-            env.info.serverPW = "n/a";
+            Helper.SetServerInfo(); // 내문서에 acc.txt 파일 생성 후
+            // 1. 서버 주소
+            // 2. 아이디
+            // 3. 비밀번호 순으로 적으면됨
+
             Protocols.ReqSetCookie req = new Protocols.ReqSetCookie();
             
             Protocols.ReqPatchBooksMeta reqPatch = new Protocols.ReqPatchBooksMeta();

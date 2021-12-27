@@ -18,16 +18,19 @@ namespace KomgaInfoChanger.RestAPI
             if (header != null)
                 request.AddHeaders(header);
 
+            // link.test/user?[player=1234] player, 1234 => 여기에 들어갈 변수
             if (queryParameter != null)
             {
                 foreach (var pair in queryParameter)
                     request.AddQueryParameter(pair.Key, pair.Value);
             }
 
+            // 서버에 데이터를 보낼 때 xml, json데이터를 넣어서 보냄.
+            // key = 데이터 타입, value = 값
             if (method != Method.GET && bodyParameter != null)
             {
                 foreach (var pair in bodyParameter)
-                    request.AddParameter(pair.Key, pair.Value);
+                    request.AddParameter(pair.Key, pair.Value, ParameterType.RequestBody);
             }
 
             var response = restClient.Execute(request);
