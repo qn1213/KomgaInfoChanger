@@ -8,7 +8,7 @@ namespace KomgaInfoChanger.Protocols
     {
         private const string api = "/api/v1/login/set-cookie";
 
-        public ResSetCookie_test res;
+        public Result_ReqSetCookie result;
         private Dictionary<string, string> header;
 
         public ReqSetCookie()
@@ -18,27 +18,36 @@ namespace KomgaInfoChanger.Protocols
             header = new Dictionary<string, string>();
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
 
-            res = new ResSetCookie_test();
+            result = new Result_ReqSetCookie();
         }
 
         public bool Request()
         {
+            Logger log = Logger.GetInstance;
             string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
 
             if (string.IsNullOrEmpty(ret))
+            {
+                log.AddLog("로그인 성공");
                 return true;
+            }
             else
             {
                 JObject obj = JObject.Parse(ret);
-                res.status = Helper.GetInt(obj.GetValue("status").ToString());
-                res.error = obj.GetValue("error").ToString();
-                res.message = obj.GetValue("message").ToString();
+                result.status = Helper.GetInt(obj.GetValue("status").ToString());
+                result.error = obj.GetValue("error").ToString();
+                result.message = obj.GetValue("message").ToString();
+
+                log.AddLog(result.status + " : " + result.error + " :" + result.message);
+#if DEBUG
+                System.Console.WriteLine(result.status+"\n"+result.error+"\n"+result.message);
+#endif
                 return false;
             }
         }
     }
 
-    internal class ResSetCookie_test
+    internal class Result_ReqSetCookie
     {
         public int status;
         public string error;

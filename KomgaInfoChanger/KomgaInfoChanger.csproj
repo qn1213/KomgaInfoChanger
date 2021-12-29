@@ -71,7 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infos\BookInfos.cs" />
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="UI\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Protocols\ProtocolDefine.cs" />
@@ -83,11 +83,11 @@
     <Compile Include="Supports\ArchiveLoader.cs" />
     <Compile Include="Supports\env.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
-    <Page Include="LoginWindow.xaml">
+    <Page Include="UI\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -97,7 +97,7 @@
     </Compile>
     <Compile Include="Supports\Helper.cs" />
     <Compile Include="Supports\Logger.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

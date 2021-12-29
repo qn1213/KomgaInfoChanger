@@ -25,5 +25,11 @@ namespace KomgaInfoChanger
         {
             InitializeComponent();
         }
+
+        private void LoginButtonClick(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+        }
     }
 }

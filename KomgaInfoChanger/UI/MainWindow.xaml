@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="LoginButton" Content="로그인" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="LoginButtonClick"/>
+        <Ellipse x:Name="ellipse" HorizontalAlignment="Left" Height="15" Margin="187,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="15" Fill="#FFFF3939"/>
 
 
     </Grid>

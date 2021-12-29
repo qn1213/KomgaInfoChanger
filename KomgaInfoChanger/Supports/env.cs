@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.IO;
 
 namespace KomgaInfoChanger
 {
@@ -34,13 +35,14 @@ namespace KomgaInfoChanger
         public const string AUTH_PREFIX_ = "Authorization";
 
         // 로그인 정보
-        public static string basicAuthInfo { get; set; }               
+        public static string basicAuthInfo { get; set; }
 
 
         // 파일
+        public static string myDocumentsPath { get => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\"; }
+
 
         // 작품 메타데이터 info.txt파일 이름
         public static string infoName { get; set; }
-
     }
 }

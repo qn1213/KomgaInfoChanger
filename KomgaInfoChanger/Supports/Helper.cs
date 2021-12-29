@@ -2,11 +2,38 @@
 using System.Text;
 using System.Net.Http.Headers;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KomgaInfoChanger
 {
     internal class Helper
     {
+        //Try Login, store authinfo when login successfuly
+        public static bool SetServerInfo(string _serverAddress, string _serverID, string _serverPW, bool? _isLoginSave = false) //add store checkboxvalue
+        {
+            env.info.serverAddr = _serverAddress;
+            env.info.serverID = _serverID;
+            env.info.serverPW = _serverPW;
+            Protocols.ReqSetCookie reqSetCookie = new Protocols.ReqSetCookie();
+            bool resultSetCookie = reqSetCookie.Request();
+            if (resultSetCookie)
+            {
+                //if checkboxvalue is ture, store env.basicauthinfo
+                if (_isLoginSave is true)
+                {
+                    Stream fs = new FileStream(env.myDocumentsPath+"a.dat", FileMode.Create);
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(fs, env.basicAuthInfo);
+                    fs.Close();
+                }
+            }
+            else
+            {
+                //do some when failed login
+            }
+            return resultSetCookie;
+        }
         public static void SetServerInfo()
         {
             StreamReader sr = new StreamReader(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\acc.txt");
@@ -17,6 +44,13 @@ namespace KomgaInfoChanger
             env.info.serverAddr = ret[0];
             env.info.serverID = ret[1];
             env.info.serverPW = ret[2];
+        }
+        public static void ReadServerInfo()
+        {
+            Stream fs = new FileStream(env.myDocumentsPath + "a.dat", FileMode.Open);
+            BinaryFormatter bf = new BinaryFormatter();
+            env.basicAuthInfo = bf.Deserialize(fs).ToString();
+            fs.Close();
         }
 
         public static string EncodeBase64(string _value)
