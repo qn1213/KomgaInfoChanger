@@ -10,17 +10,32 @@ namespace KomgaInfoChanger.Protocols
         private const string api = "/api/v1/books";
         private Dictionary<string, string> header;
 
-        public ReqBooksInfo()
+        private int getCount = 0;
+        public ReqBooksInfo(int count = 0)
         {
             header = new Dictionary<string, string>();
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
+
+            if (count < 0)
+                getCount = 0;
+            getCount = count;
         }
 
-        public ConcurrentDictionary<string, SBookAttribute> Request()
+        public Dictionary<string, SBookAttribute> Request()
         {
-            string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
+            string ret = null;
+            if (getCount > 0)
+            {   // 서버에 저장된 파일 수만큼 가져올 수 있게 해줘야함
+                // API인자로 Page, Size가 있는데...
+                // Page는 먼지 몰?루 겠음
+                Dictionary<string, string> query = new Dictionary<string, string>();
+                query.Add("size", getCount.ToString());
+                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header, query);
+            }
+            else
+                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
 
-            ConcurrentDictionary<string, SBookAttribute> tmp = new ConcurrentDictionary<string, SBookAttribute>();
+            Dictionary<string, SBookAttribute> server_data = new Dictionary<string, SBookAttribute>();
 
             JObject jObj = JObject.Parse(ret);
             foreach(var item in jObj)
@@ -41,13 +56,17 @@ namespace KomgaInfoChanger.Protocols
                         string metaData = fJobj.GetValue("media").ToString();
                         JObject fJobj2 = JObject.Parse(metaData);
                         tmpAtri.mediaType = fJobj2.GetValue("mediaType").ToString();
-                        
-                        tmp.TryAdd(fJobj.GetValue("name").ToString(), tmpAtri);
+
+                        if (!server_data.ContainsKey(fJobj.GetValue("name").ToString()))
+                            server_data.Add(fJobj.GetValue("name").ToString(), tmpAtri);
+                        else
+                            continue;
+
                     }
                     break;
                 }
             }
-            return tmp;
+            return server_data;
         }
     }
 }

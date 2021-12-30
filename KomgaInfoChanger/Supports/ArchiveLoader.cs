@@ -7,61 +7,65 @@ namespace KomgaInfoChanger
 {
     internal class ArchiveLoader
     {
-        public SMetaDataAttribute GetInfoFromFile(string path)
-        {
-            SMetaDataAttribute fileAtri = new SMetaDataAttribute();
+        // 몇개 쪼갤건지
+        private const int cutFile = 10;
 
-            using (FileStream fs = File.OpenRead(path))
+        // path : zip파일들 경로 배열
+        public static Dictionary<string, SMetaDataAttribute> GetInfoFromFile(string[] paths)
+        {         
+            Dictionary<string, SMetaDataAttribute> info = new Dictionary<string, SMetaDataAttribute>();
+            foreach(string path in paths)
             {
-                using (ZipArchive zip = new ZipArchive(fs, ZipArchiveMode.Read))
+                using (FileStream fs = File.OpenRead(path))
                 {
-                    foreach (ZipArchiveEntry entry in zip.Entries)
+                    using (ZipArchive zip = new ZipArchive(fs, ZipArchiveMode.Read))
                     {
-                        if(entry.FullName.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
+                        foreach (ZipArchiveEntry entry in zip.Entries)
                         {
-                            using (StreamReader sr = new StreamReader(entry.Open()))
+                            if (entry.FullName.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                string name = sr.ReadToEnd().Replace("\n\n","\n");
-                                string[] test = name.Split(Environment.NewLine.ToCharArray());
+                                using (StreamReader sr = new StreamReader(entry.Open()))
+                                {
+                                    string reader = sr.ReadToEnd().Replace("\n\n", "\n");
+                                    string[] attributes = reader.Split(Environment.NewLine.ToCharArray());
 
-                                /*
-                                    for(int i = 0; i < test.Length; i++)
-                                    {
-                                        // test[i]\r\n UI 호출해서 뿌려주면됨
-                                    }
-                                */                                
-                                
-                                //fileAtri.number = GetString(test[0]);
-                                //fileAtri.title = GetString(test[1]);                                
-                                //fileAtri.atrist = GetArrayString(test[2]);
-                                //fileAtri.group = GetArrayString(test[3]);
-                                //fileAtri.type = GetString(test[4]);
-                                //fileAtri.series = GetArrayString(test[5]);
-                                //fileAtri.character = GetArrayString(test[6]);
-                                //fileAtri.tag = GetDictonaryString(test[7]);
-                                //fileAtri.language = GetString(test[8]);
+                                    /*
+                                        for(int i = 0; i < test.Length; i++)
+                                        {
+                                            // test[i]\r\n UI 호출해서 뿌려주면됨
+                                        }
+                                    */
+                                                                        
+                                    SMetaDataAttribute fileAtri = new SMetaDataAttribute();
+                                    fileAtri.number = GetDictonaryString(attributes[0]);
+                                    fileAtri.atrist = GetDic_List(attributes[2]);
+                                    fileAtri.group = GetDictonaryString(attributes[3]);
+                                    fileAtri.type = GetDictonaryString(attributes[4]);
+                                    fileAtri.series = GetDictonaryString(attributes[5]);
+                                    fileAtri.character = GetDic_List(attributes[6]);
+                                    fileAtri.tag = GetDic_List(attributes[7]);
+                                    fileAtri.language = GetDictonaryString(attributes[8]);
 
-                                return fileAtri;
+                                    string titles = Path.GetFileNameWithoutExtension(fs.Name);
+                                    info.Add(titles, fileAtri);
+                                }
+                                break;
                             }
                         }
                     }
                 }
-            } 
+            }
 
-            Dictionary<string, string> testDic = new Dictionary<string, string>();
-            testDic.Add("role", "Lang");
-            testDic.Add("name", "Korean");
-
-            return fileAtri;
+            return info;
         }
 
-        private string GetString(string str)
+        private static string GetString(string str)
         {
             string[] data = str.Split(new string[] { ": " }, StringSplitOptions.None);
             return data[1];
         }
 
-        private string[] GetArrayString(string str)
+        private static string[] GetArrayString(string str)
         {
             string[] data1 = str.Split(new string[] {": "}, StringSplitOptions.None);
             string[] data2 = data1[1].Split(new string[] { ", "}, StringSplitOptions.None);
@@ -69,17 +73,34 @@ namespace KomgaInfoChanger
             return data2;
         }
 
-        private Dictionary<string, string> GetDictonaryString(string str)
+        private static Dictionary<string, string> GetDictonaryString(string str)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
 
             string[] data1 = str.Split(new string[] { ": " }, StringSplitOptions.None);           
             string[] data2 = data1[1].Split(new string[] { ", " }, StringSplitOptions.None);
-            
+
             foreach(string value in data2)
             {
                 data.Add(data1[0], value);
             }
+
+            return data;
+        }
+
+        private static Dictionary<string, List<string>> GetDic_List(string str)
+        {
+            Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
+
+            string[] data1 = str.Split(new string[] { ": " }, StringSplitOptions.None);
+            string[] data2 = data1[1].Split(new string[] { ", " }, StringSplitOptions.None);
+
+            List<string> list = new List<string>();
+            foreach(string value in data2)
+            {
+                list.Add(value);
+            }
+            data.Add(data1[0], list);
 
             return data;
         }

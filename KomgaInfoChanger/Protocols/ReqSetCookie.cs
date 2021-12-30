@@ -8,7 +8,7 @@ namespace KomgaInfoChanger.Protocols
     {
         private const string api = "/api/v1/login/set-cookie";
 
-        public ResSetCookie_test res;
+        public ResSetCookie res;
         private Dictionary<string, string> header;
 
         public ReqSetCookie()
@@ -18,7 +18,7 @@ namespace KomgaInfoChanger.Protocols
             header = new Dictionary<string, string>();
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
 
-            res = new ResSetCookie_test();
+            res = new ResSetCookie();
         }
 
         public bool Request()
@@ -38,7 +38,7 @@ namespace KomgaInfoChanger.Protocols
         }
     }
 
-    internal class ResSetCookie_test
+    internal class ResSetCookie
     {
         public int status;
         public string error;

@@ -81,7 +81,9 @@
     <Compile Include="RestAPI\ApiSender.cs" />
     <Compile Include="Infos\Attributes.cs" />
     <Compile Include="Supports\ArchiveLoader.cs" />
+    <Compile Include="Supports\BodyDataMaker.cs" />
     <Compile Include="Supports\env.cs" />
+    <Compile Include="Supports\TestGenericTypeDef.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>

@@ -2,6 +2,7 @@
 using System.Text;
 using System.Net.Http.Headers;
 using System.IO;
+using System.Collections.Generic;
 
 namespace KomgaInfoChanger
 {
