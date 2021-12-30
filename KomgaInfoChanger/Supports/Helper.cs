@@ -22,10 +22,17 @@ namespace KomgaInfoChanger
                 //if checkboxvalue is ture, store env.basicauthinfo
                 if (_isLoginSave is true)
                 {
-                    Stream fs = new FileStream(env.myDocumentsPath+"a.dat", FileMode.Create);
-                    BinaryFormatter bf = new BinaryFormatter();
-                    bf.Serialize(fs, env.basicAuthInfo);
-                    fs.Close();
+                    StoreAccount storeAccount = new StoreAccount();
+                    storeAccount.address = env.info.serverAddr;
+                    storeAccount.id = env.info.serverID;
+                    storeAccount.authinfo = env.basicAuthInfo;
+
+                    using (Stream fs = new FileStream(env.myDocumentsPath + "storeAccount.dat", FileMode.Create))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+                        bf.Serialize(fs, storeAccount);
+                    }
+
                 }
             }
             else
@@ -47,10 +54,13 @@ namespace KomgaInfoChanger
         }
         public static void ReadServerInfo()
         {
-            Stream fs = new FileStream(env.myDocumentsPath + "a.dat", FileMode.Open);
-            BinaryFormatter bf = new BinaryFormatter();
-            env.basicAuthInfo = bf.Deserialize(fs).ToString();
-            fs.Close();
+            using (Stream fs = new FileStream(env.myDocumentsPath + "storeAccount.dat", FileMode.Open))
+            {
+                StoreAccount storeAccount = new StoreAccount();
+
+                BinaryFormatter bf = new BinaryFormatter();
+                storeAccount = (StoreAccount)bf.Deserialize(fs);
+            }
         }
 
         public static string EncodeBase64(string _value)

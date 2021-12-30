@@ -31,5 +31,10 @@ namespace KomgaInfoChanger
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
         }
+
+        private void ClickLoadLoginData(object sender, RoutedEventArgs e)
+        {
+            Helper.ReadServerInfo();
+        }
     }
 }

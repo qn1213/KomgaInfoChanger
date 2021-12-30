@@ -8,7 +8,7 @@ namespace KomgaInfoChanger.Protocols
     {
         private const string api = "/api/v1/login/set-cookie";
 
-        public Result_ReqSetCookie result;
+        public Result_ReqSetCookie response;
         private Dictionary<string, string> header;
 
         public ReqSetCookie()
@@ -18,7 +18,7 @@ namespace KomgaInfoChanger.Protocols
             header = new Dictionary<string, string>();
             header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
 
-            result = new Result_ReqSetCookie();
+            response = new Result_ReqSetCookie();
         }
 
         public bool Request()
@@ -34,13 +34,13 @@ namespace KomgaInfoChanger.Protocols
             else
             {
                 JObject obj = JObject.Parse(ret);
-                result.status = Helper.GetInt(obj.GetValue("status").ToString());
-                result.error = obj.GetValue("error").ToString();
-                result.message = obj.GetValue("message").ToString();
+                response.status = Helper.GetInt(obj.GetValue("status").ToString());
+                response.error = obj.GetValue("error").ToString();
+                response.message = obj.GetValue("message").ToString();
 
-                log.AddLog(result.status + " : " + result.error + " :" + result.message);
+                log.AddLog(response.status + " : " + response.error + " :" + response.message);
 #if DEBUG
-                System.Console.WriteLine(result.status+"\n"+result.error+"\n"+result.message);
+                System.Console.WriteLine(response.status+"\n"+response.error+"\n"+response.message);
 #endif
                 return false;
             }

@@ -1,7 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace KomgaInfoChanger
-{    
+{
+    [Serializable]
+    public struct StoreAccount
+    {
+        public string address;
+        public string id;
+        public string authinfo;
+    }
     public struct SBookAttribute
     {// name = Key
         public string                       id;         // => [id]
