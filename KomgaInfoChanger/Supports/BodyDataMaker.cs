@@ -66,19 +66,19 @@ namespace KomgaInfoChanger
                     attri.Add(Role[1], data.Value);
 
                     attributeData.Add(attri);
-        }
+                }
 
                 // 작가
                 foreach (var data in metaData.artist)
-        {
+                {
                     foreach (var tags in data.Value)
                     {
-                        Dictionary<string, string> attri = new Dictionary<string, string>();                        
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
                         attri.Add(Role[0], data.Key);
                         attri.Add(Role[1], tags);
 
                         attributeData.Add(attri);
-        }
+                    }
                 }
                 // 그룹
                 foreach (var data in metaData.group)
@@ -133,7 +133,7 @@ namespace KomgaInfoChanger
                 foreach (var data in metaData.tag)
                 {
                     foreach (var tags in data.Value)
-            {
+                    {
                         Dictionary<string, string> attri = new Dictionary<string, string>();
                         string[] tagData = tags.Split(':');
 
@@ -146,7 +146,7 @@ namespace KomgaInfoChanger
 
                 // 언어
                 foreach (var data in metaData.language)
-            {
+                {
                     Dictionary<string, string> attri = new Dictionary<string, string>();
                     attri.Add(Role[0], data.Key);
                     attri.Add(Role[1], data.Value);
@@ -164,10 +164,8 @@ namespace KomgaInfoChanger
         }
 
         public static void MakeBody(ref USERDATA userData, ref List<string> outPut)
-            {
+        {
 
-            }
-         */
-
+        }
     }
 }

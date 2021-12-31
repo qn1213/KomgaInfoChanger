@@ -32,19 +32,21 @@ namespace KomgaInfoChanger
             header.Add("Content-Type", "application/json");
 
             return header;
-        }
-
-
-        public const string AUTH_PREFIX_ = "Authorization";
-
-        // 로그인 정보
-        public static string basicAuthInfo { get; set; }               
-
-
-        // 파일
+        }        
 
         // 작품 메타데이터 info.txt파일 이름
         public static string infoName { get; set; }
+
+
+        public static Logger logger;
+
+        public static Dictionary<string, SBookAttribute> bookInfo;
+
+        public static void Init()
+        {
+            logger = Logger.GetInstance;
+            bookInfo = new Dictionary<string, SBookAttribute>();
+        }
 
     }
 }
