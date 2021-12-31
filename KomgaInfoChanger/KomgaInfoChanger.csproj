@@ -84,7 +84,6 @@
     <Compile Include="Supports\ArchiveLoader.cs" />
     <Compile Include="Supports\BodyDataMaker.cs" />
     <Compile Include="Supports\env.cs" />
-    <Compile Include="Supports\Response.cs" />
     <Compile Include="Supports\TestGenericTypeDef.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
     <Page Include="LoginWindow.xaml">
