@@ -44,10 +44,12 @@ namespace KomgaInfoChanger
             string body = null;
             BodyDataMaker.MakeMultipleBody(ref myFile, ref body);
 
-            List<string> bodyData = new List<string>();
-            BodyDataMaker.MakeBody(ref myFile, ref bodyData);
+            //List<string> bodyData = new List<string>();
+            //BodyDataMaker.MakeBody(ref myFile, ref bodyData);
             // API 호출
-            
+            Protocols.ReqPatchBooksMeta req2 = new Protocols.ReqPatchBooksMeta();
+            req2.Request(body);
+
 
 
             // 사용했던 변수들 초기화

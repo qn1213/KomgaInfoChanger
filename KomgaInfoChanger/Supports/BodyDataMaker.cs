@@ -45,7 +45,7 @@ namespace KomgaInfoChanger
     internal class BodyDataMaker
     {
         private static string[] Role = { "role", "name" };
-
+        //private static string[] Translate = { "number", "artist", "group", "type", "series", "character", "tag", "language" };
         // 인자로 ref를 쓰는 이유는 메모리 아끼려고. 대신 userData는 수정X! 주의해야함.
         public static void MakeMultipleBody(ref USERDATA userData, ref string outPut)
         {
@@ -161,6 +161,7 @@ namespace KomgaInfoChanger
             }
 
             string json = JsonConvert.SerializeObject(finalyData, Formatting.Indented);
+            outPut = json;
         }
 
         public static void MakeBody(ref USERDATA userData, ref List<string> outPut)

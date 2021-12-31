@@ -7,6 +7,8 @@ namespace KomgaInfoChanger
 {
     internal class ArchiveLoader
     {
+        private static string[] Translate = { "number", "artist", "group", "type", "series", "character", "tag", "language" };
+
         // path : zip파일들 경로 배열
         public static Dictionary<string, SMetaDataAttribute> GetInfoFromFile(string[] paths)
         {         
@@ -72,7 +74,21 @@ namespace KomgaInfoChanger
 
             foreach(string value in data2)
             {
-                data.Add(data1[0], value);
+                switch (data1[0])
+                {
+                    case "갤러리 넘버":
+                        data.Add(Translate[0], value);
+                        break;                   
+                    case "타입":
+                        data.Add(Translate[3], value);
+                        break;                    
+                    case "언어":
+                        data.Add(Translate[7], value);
+                        break;
+                    default:
+                        data.Add(data1[0], value);
+                        break;
+                }
             }
 
             return data;
@@ -90,7 +106,26 @@ namespace KomgaInfoChanger
             {
                 list.Add(value);
             }
-            data.Add(data1[0], list);
+
+            switch(data1[0])
+            {
+                case "작가":
+                    data.Add(Translate[1], list);
+                    break;
+                case "그룹":
+                    data.Add(Translate[2], list);
+                    break;
+                case "시리즈":
+                    data.Add(Translate[4], list);
+                    break;
+                case "캐릭터":
+                    data.Add(Translate[5], list);
+                    break;
+                default:
+                    data.Add(data1[0], list);
+                    break;
+            }
+            
 
             return data;
         }
