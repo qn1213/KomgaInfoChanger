@@ -7,9 +7,6 @@ namespace KomgaInfoChanger
 {
     internal class ArchiveLoader
     {
-        // 몇개 쪼갤건지
-        private const int cutFile = 10;
-
         // path : zip파일들 경로 배열
         public static Dictionary<string, SMetaDataAttribute> GetInfoFromFile(string[] paths)
         {         
@@ -28,20 +25,13 @@ namespace KomgaInfoChanger
                                 {
                                     string reader = sr.ReadToEnd().Replace("\n\n", "\n");
                                     string[] attributes = reader.Split(Environment.NewLine.ToCharArray());
-
-                                    /*
-                                        for(int i = 0; i < test.Length; i++)
-                                        {
-                                            // test[i]\r\n UI 호출해서 뿌려주면됨
-                                        }
-                                    */
                                                                         
                                     SMetaDataAttribute fileAtri = new SMetaDataAttribute();
                                     fileAtri.number = GetDictonaryString(attributes[0]);
-                                    fileAtri.atrist = GetDic_List(attributes[2]);
-                                    fileAtri.group = GetDictonaryString(attributes[3]);
+                                    fileAtri.artist = GetDic_List(attributes[2]);
+                                    fileAtri.group = GetDic_List(attributes[3]);
                                     fileAtri.type = GetDictonaryString(attributes[4]);
-                                    fileAtri.series = GetDictonaryString(attributes[5]);
+                                    fileAtri.series = GetDic_List(attributes[5]);
                                     fileAtri.character = GetDic_List(attributes[6]);
                                     fileAtri.tag = GetDic_List(attributes[7]);
                                     fileAtri.language = GetDictonaryString(attributes[8]);

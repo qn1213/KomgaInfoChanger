@@ -22,12 +22,12 @@ namespace KomgaInfoChanger
         public static string basicAuthInfo { get; set; }
 
         // 요청 정보
-        private static Dictionary<string, string> header;
         public static Dictionary<string, string> GetHeader()
         {
             if (String.IsNullOrEmpty(basicAuthInfo))
                 return null;
-  
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
             header.Add(AUTH_PREFIX_, basicAuthInfo);
             header.Add("Content-Type", "application/json");
 
@@ -41,10 +41,11 @@ namespace KomgaInfoChanger
         // 작품 메타데이터 info.txt파일 이름
         public static string infoName { get; set; }
 
+        public static Logger logger { get; private set; }
         public static void Init()
         {
-            header = new Dictionary<string, string>();
             bookInfo = new Dictionary<string, SBookAttribute>();
+            logger = Logger.GetInstance;
         }
     }
 }

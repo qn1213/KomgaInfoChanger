@@ -52,8 +52,7 @@ namespace KomgaInfoChanger.RestAPI
 
                 response.Content = json.ToString();
             }
-
-            Console.WriteLine(response.ResponseStatus + " - " + response.StatusCode);
+            
             return response.Content;
         }
 

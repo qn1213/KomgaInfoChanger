@@ -8,14 +8,10 @@ namespace KomgaInfoChanger.Protocols
     internal class ReqBooksInfo
     {
         private const string api = "/api/v1/books";
-        private Dictionary<string, string> header;
 
         private int getCount = 0;
         public ReqBooksInfo(int count = 0)
         {
-            header = new Dictionary<string, string>();
-            header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
-
             if (count < 0)
                 getCount = 0;
             getCount = count;
@@ -30,20 +26,31 @@ namespace KomgaInfoChanger.Protocols
                 // Page는 먼지 몰?루 겠음
                 Dictionary<string, string> query = new Dictionary<string, string>();
                 query.Add("size", getCount.ToString());
-                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header, query);
+                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, env.GetHeader(), query);
             }
             else
-                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
+                ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, env.GetHeader());
+
+            JObject jObj;
+            try
+            {
+                jObj = JObject.Parse(ret);
+            }
+            catch (System.Exception ex)
+            {
+                env.logger.AddLog(ex.Message);
+                env.logger.AddLog(ret);
+                return null;
+            }
 
             Dictionary<string, SBookAttribute> server_data = new Dictionary<string, SBookAttribute>();
-
-            JObject jObj = JObject.Parse(ret);
-            foreach(var item in jObj)
+            
+            foreach (var item in jObj)
             {
                 string k = item.Key;
-                if(k == "content")
+                if (k == "content")
                 {
-                    foreach(var item2 in item.Value)
+                    foreach (var item2 in item.Value)
                     {
                         string k2 = item2.ToString();
                         SBookAttribute tmpAtri;
@@ -52,7 +59,7 @@ namespace KomgaInfoChanger.Protocols
                         tmpAtri.id = fJobj.GetValue("id").ToString();
                         tmpAtri.seriesId = fJobj.GetValue("seriesId").ToString();
                         tmpAtri.libraryId = fJobj.GetValue("libraryId").ToString();
-                        
+
                         string metaData = fJobj.GetValue("media").ToString();
                         JObject fJobj2 = JObject.Parse(metaData);
                         tmpAtri.mediaType = fJobj2.GetValue("mediaType").ToString();
@@ -61,11 +68,11 @@ namespace KomgaInfoChanger.Protocols
                             server_data.Add(fJobj.GetValue("name").ToString(), tmpAtri);
                         else
                             continue;
-
                     }
                     break;
                 }
             }
+
             return server_data;
         }
     }

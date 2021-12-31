@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Protocols\ProtocolDefine.cs" />
     <Compile Include="Protocols\ReqBooksInfo.cs" />
+    <Compile Include="Protocols\ReqPatchBookMeta.cs" />
     <Compile Include="Protocols\ReqPatchBooksMeta.cs" />
     <Compile Include="Protocols\ReqSetCookie.cs" />
     <Compile Include="RestAPI\ApiSender.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Supports\ArchiveLoader.cs" />
     <Compile Include="Supports\BodyDataMaker.cs" />
     <Compile Include="Supports\env.cs" />
+    <Compile Include="Supports\Response.cs" />
     <Compile Include="Supports\TestGenericTypeDef.cs" />
     <Compile Include="Supports\ThreadFactory.cs" />
     <Page Include="LoginWindow.xaml">
