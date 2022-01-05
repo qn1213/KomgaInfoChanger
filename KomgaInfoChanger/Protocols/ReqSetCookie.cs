@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RestSharp;
 using Newtonsoft.Json.Linq;
+using System.Windows.Media;
 
 namespace KomgaInfoChanger.Protocols
 {
@@ -29,6 +30,7 @@ namespace KomgaInfoChanger.Protocols
             if (string.IsNullOrEmpty(ret))
             {
                 log.AddLog("로그인 성공");
+                env.mainWindow.SetColorLoginStatusLamp(Colors.SpringGreen);
                 return true;
             }
             else
@@ -42,6 +44,7 @@ namespace KomgaInfoChanger.Protocols
 #if DEBUG
                 System.Console.WriteLine(response.status+"\n"+response.error+"\n"+response.message);
 #endif
+                env.mainWindow.SetColorLoginStatusLamp(Colors.OrangeRed);
                 return false;
             }
         }

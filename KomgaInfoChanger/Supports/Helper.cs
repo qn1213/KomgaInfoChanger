@@ -16,8 +16,8 @@ namespace KomgaInfoChanger
             env.info.serverID = _serverID;
             env.info.serverPW = _serverPW;
             Protocols.ReqSetCookie reqSetCookie = new Protocols.ReqSetCookie();
-            bool resultSetCookie = reqSetCookie.Request();
-            if (resultSetCookie)
+            bool responseSetCookie = reqSetCookie.Request();
+            if (responseSetCookie)
             {
                 //if checkboxvalue is ture, store env.basicauthinfo
                 if (_isLoginSave is true)
@@ -39,7 +39,7 @@ namespace KomgaInfoChanger
             {
                 //do some when failed login
             }
-            return resultSetCookie;
+            return responseSetCookie;
         }
         public static void SetServerInfo()
         {

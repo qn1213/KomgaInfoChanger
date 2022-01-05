@@ -27,9 +27,12 @@ namespace KomgaInfoChanger
 
         private void ClickLoginButton(object sender, RoutedEventArgs e)
         {
-            Helper.SetServerInfo(serverAddr.Text, serverID.Text, serverPW.Password, saveCheck.IsChecked);
+            bool isLoginSuccess = Helper.SetServerInfo(xn_protocolCombobox.Text + xn_serverAddr.Text, xn_serverID.Text, xn_serverPW.Password, xn_saveCheck.IsChecked);
 
-
+            if (isLoginSuccess)
+            {
+                this.Close();
+            }
         }
         private void ClickTestDataLoad(object sender, RoutedEventArgs e)
         {
@@ -67,11 +70,14 @@ namespace KomgaInfoChanger
             */
             btn.VerticalAlignment = VerticalAlignment.Top;
             btn.Margin = new Thickness(0);
-            stackPanel1.Children.Add(btn);
+            xn_stackPanel1.Children.Add(btn);
             return btn;
         }
 
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
 
 

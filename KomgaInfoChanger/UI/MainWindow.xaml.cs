@@ -21,6 +21,7 @@ namespace KomgaInfoChanger
 
     public partial class MainWindow : Window
     {
+        public LoginWindow loginWindow = new LoginWindow();
         public MainWindow()
         {
             InitializeComponent();
@@ -28,13 +29,29 @@ namespace KomgaInfoChanger
 
         private void LoginButtonClick(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
+            if (!loginWindow.IsLoaded)
+            {
+                loginWindow = new LoginWindow();
+                loginWindow.Show();
+                
+            }
+            else
+            {
+                loginWindow.Activate();
+            }
+
+            
+
         }
 
         private void ClickLoadLoginData(object sender, RoutedEventArgs e)
         {
             Helper.ReadServerInfo();
+        }
+
+        public void SetColorLoginStatusLamp(Color _color)
+        {
+            LoginStatusLamp.Fill = new SolidColorBrush(_color);
         }
     }
 }
