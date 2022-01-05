@@ -19,21 +19,13 @@ namespace KomgaInfoChanger.Protocols
 
             if (string.IsNullOrEmpty(ret))
             {
-                log.AddLog("로그인 성공");
+                env.logger.AddLog("로그인 성공");
                 env.mainWindow.SetColorLoginStatusLamp(Colors.SpringGreen);
                 return true;
             }
             else
             {
                 JObject obj = JObject.Parse(ret);
-                response.status = Helper.GetInt(obj.GetValue("status").ToString());
-                response.error = obj.GetValue("error").ToString();
-                response.message = obj.GetValue("message").ToString();
-
-                log.AddLog(response.status + " : " + response.error + " :" + response.message);
-#if DEBUG
-                System.Console.WriteLine(response.status+"\n"+response.error+"\n"+response.message);
-#endif
                 env.mainWindow.SetColorLoginStatusLamp(Colors.OrangeRed);
 
                 // 에러 났을 경우 그냥 로그에 기록.
