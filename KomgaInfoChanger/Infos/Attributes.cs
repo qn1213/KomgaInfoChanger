@@ -4,7 +4,7 @@ namespace KomgaInfoChanger
 {    
     public struct SBookAttribute
     {// name = Key
-        public string                       id;         // => [id]
+        public string                       id;         // => [Book id]
         public string                       seriesId;   // => [seriesId]
         public string                       libraryId;  // => [libraryId]
         public string                       mediaType;  // => [media][mediaType]

@@ -37,7 +37,7 @@ namespace KomgaInfoChanger
     //              }
     //         ]
 
-    using BODYDATA = Dictionary<string, Dictionary<string, List<string>>>;
+    using BODYDATA = Dictionary<string, List<Dictionary<string, string>>>;
     using BODYDATAS = Dictionary<string, Dictionary<string, List<Dictionary<string, string>>>>;
 
     using USERDATA = Dictionary<string, SMetaDataAttribute>; // 클라이언트 파일
@@ -153,20 +153,128 @@ namespace KomgaInfoChanger
 
                     attributeData.Add(attri);
                 }
-
-                Dictionary<string, List<Dictionary<string, string>>> authorData = new Dictionary<string, List<Dictionary<string, string>>>();
+                                
+                BODYDATA authorData = new BODYDATA();
                 authorData.Add("authors", attributeData);
 
                 finalyData.Add(serverData.Value.id, authorData);
             }
-
-            string json = JsonConvert.SerializeObject(finalyData, Formatting.Indented);
-            outPut = json;
+                        
+            outPut = JsonConvert.SerializeObject(finalyData,Formatting.Indented);
         }
 
-        public static void MakeBody(ref USERDATA userData, ref List<string> outPut)
-        {
 
-        }
+        public static void MakeBody(ref USERDATA userData, ref Dictionary<string, string> outPut)
+        {    
+            foreach (var serverData in env.bookInfo)
+            {
+                BODYDATA authorData = new BODYDATA();
+
+                SMetaDataAttribute metaData;
+                userData.TryGetValue(serverData.Key, out metaData);
+
+                List<Dictionary<string, string>> attributeData = new List<Dictionary<string, string>>();
+
+                // 갤러리 넘버
+                foreach (var data in metaData.number)
+                {
+                    Dictionary<string, string> attri = new Dictionary<string, string>();
+                    attri.Add(Role[0], data.Key);
+                    attri.Add(Role[1], data.Value);
+
+                    attributeData.Add(attri);
+                }
+
+                // 작가
+                foreach (var data in metaData.artist)
+                {
+                    foreach (var tags in data.Value)
+                    {
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
+                        attri.Add(Role[0], data.Key);
+                        attri.Add(Role[1], tags);
+
+                        attributeData.Add(attri);
+                    }
+                }
+                // 그룹
+                foreach (var data in metaData.group)
+                {
+                    foreach (var tags in data.Value)
+                    {
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
+                        attri.Add(Role[0], data.Key);
+                        attri.Add(Role[1], tags);
+
+                        attributeData.Add(attri);
+                    }
+                }
+
+                // 타입
+                foreach (var data in metaData.type)
+                {
+                    Dictionary<string, string> attri = new Dictionary<string, string>();
+                    attri.Add(Role[0], data.Key);
+                    attri.Add(Role[1], data.Value);
+
+                    attributeData.Add(attri);
+                }
+
+                // 시리즈
+                foreach (var data in metaData.series)
+                {
+                    foreach (var tags in data.Value)
+                    {
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
+                        attri.Add(Role[0], data.Key);
+                        attri.Add(Role[1], tags);
+
+                        attributeData.Add(attri);
+                    }
+                }
+
+                // 캐릭터
+                foreach (var data in metaData.character)
+                {
+                    foreach (var tags in data.Value)
+                    {
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
+                        attri.Add(Role[0], data.Key);
+                        attri.Add(Role[1], tags);
+
+                        attributeData.Add(attri);
+                    }
+                }
+
+                // 태그
+                foreach (var data in metaData.tag)
+                {
+                    foreach (var tags in data.Value)
+                    {
+                        Dictionary<string, string> attri = new Dictionary<string, string>();
+                        string[] tagData = tags.Split(':');
+
+                        for (int i = 0; i < Role.Length; i++)
+                            attri.Add(Role[i], tagData[i]);
+
+                        attributeData.Add(attri);
+                    }
+                }
+
+                // 언어
+                foreach (var data in metaData.language)
+                {
+                    Dictionary<string, string> attri = new Dictionary<string, string>();
+                    attri.Add(Role[0], data.Key);
+                    attri.Add(Role[1], data.Value);
+
+                    attributeData.Add(attri);
+                }
+
+                authorData.Add("authors", attributeData);
+                string tmpJson = JsonConvert.SerializeObject(authorData, Formatting.Indented);
+                outPut.Add(serverData.Value.id, tmpJson);
+            }
+        }
     }
 }

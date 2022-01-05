@@ -10,26 +10,26 @@ namespace KomgaInfoChanger.Protocols
         private string api = "/api/v1/books/";
         private Dictionary<string, string> body;
 
-        // 호출 시 Try/Catch로 감쌀 것
-        public ReqPatchBookMeta(string _bookID)
+        public ReqPatchBookMeta()
         {
-            if (string.IsNullOrEmpty(_bookID))
-                throw new System.Exception("Book ID is Empty");
-
-            api += _bookID + "/metadata";
-
             body = new Dictionary<string, string>();
         }
 
-        public bool Request(string _body)
+        public bool Request(string bookID ,string _body)
         {
-            body.Add("application / json", _body);
+            body.Clear();
+
+            api = "/api/v1/books/" + bookID + "/metadata";
+
+            body.Add("application/json", _body);
             
             string ret = RestAPI.ApiSender.Request(Method.PATCH, env.info.serverAddr, api, env.GetHeader(), null, body);
-
-            // 어떤 값 넘어오는지 확인하기
-            if (ret != null)
+ 
+            if (!string.IsNullOrEmpty(ret))
+            {
+                env.logger.AddLog(ret);
                 return false;
+            }
 
             return true;
         }
