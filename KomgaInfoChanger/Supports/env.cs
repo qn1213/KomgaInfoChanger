@@ -21,33 +21,40 @@ namespace KomgaInfoChanger
             public string serverPW { get; set; }
         }
 
-        // 요청 정보
-        private static Dictionary<string, string> header;
-        public static Dictionary<string, string> GetHeader()
-        {
-            if (String.IsNullOrEmpty(basicAuthInfo))
-                return null;
-
-            header = new Dictionary<string, string>();
-            header.Add(AUTH_PREFIX_, basicAuthInfo);
-            header.Add("Content-Type", "application/json");
-
-            return header;
-        }
-
-
         public const string AUTH_PREFIX_ = "Authorization";
 
         // 로그인 정보
         public static string basicAuthInfo { get; set; }
 
+        // 요청 정보
+        public static Dictionary<string, string> GetHeader()
+        {
+            if (String.IsNullOrEmpty(basicAuthInfo))
+                return null;
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add(AUTH_PREFIX_, basicAuthInfo);
+            header.Add("Content-Type", "application/json");
+
+            return header;
+        }        
+
+        // 작품 메타데이터 info.txt파일 이름
+        public static string infoName { get; set; }
+
+
+        public static Logger logger;
 
         // 파일
         public static string myDocumentsPath { get => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\"; }
 
+        public static Dictionary<string, SBookAttribute> bookInfo;
 
-        // 작품 메타데이터 info.txt파일 이름
-        public static string infoName { get; set; }
+        public static void Init()
+        {
+            logger = Logger.GetInstance;
+            bookInfo = new Dictionary<string, SBookAttribute>();
+        }
 
         //창
         public static MainWindow mainWindow { get; set; }

@@ -3,6 +3,8 @@
 using System.Windows;
 using System.Collections.Concurrent;
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace KomgaInfoChanger
 {
@@ -26,36 +28,67 @@ namespace KomgaInfoChanger
             //reqPatch.Request("{\"076YPGEHQCH4F\":{\"tags\":[\"tags1\",\"tag2\"],\"authors\":[{\"role\":\"Lang\",\"name\":\"Korean\"},{\"role\":\"number\",\"name\":\"9999\"},{\"role\":\"type\",\"name\":\"test\"},{\"role\":\"role1\",\"name\":\"na1\"},{\"role\":\"role2\",\"name\":\"na2\"}]}}");
 
 
+            //env.logger.AddLog();
+            env.Init();
 
-            //if(!req.Request())
-            //    log.AddLog(req.res.status + " : " + req.res.error + " :" + req.res.message);
-            //else
-            //    log.AddLog("로그인 성공");
+            Helper.SetServerInfo();
 
-            //Protocols.ReqBooksInfo req2 = new Protocols.ReqBooksInfo(2);
-            //ConcurrentDictionary<string, SBookAttribute> tmp = req2.Request();
+            // 로그인 정보 겟
+            Protocols.ReqSetCookie req = new Protocols.ReqSetCookie();
+            if (!req.Request())
+                return;
 
-            //foreach(var item in tmp)
+            // 서버의 북 정보 겟
+            Protocols.ReqBooksInfo reqBook = new Protocols.ReqBooksInfo(9999);
+            env.bookInfo = reqBook.Request();
+            if (env.bookInfo.Count == 0)
+                return;
+
+            // 클라이언트 파일 겟 한다음 배열로 처리
+            string folderPath = @"C:\SMB\TestFile";
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderPath);
+
+            List<string> files = new List<string>();
+            foreach(System.IO.FileInfo file in di.GetFiles())
+            {
+                if (file.Extension.ToLower().CompareTo(".zip") == 0)
+                    files.Add(file.FullName);
+            }
+
+            Dictionary<string, SMetaDataAttribute> myFile = ArchiveLoader.GetInfoFromFile(files.ToArray());
+
+            // 서버 데이터와 클라이언트 데이터 비교 후 바디 데이터 생성
+            string body1 = null;
+            BodyDataMaker.MakeMultipleBody(ref myFile, ref body1);
+
+            Dictionary<string, string> body2 = new Dictionary<string, string>();
+            BodyDataMaker.MakeBody(ref myFile, ref body2);
+
+            // API 호출
+            Protocols.ReqPatchBooksMeta req2 = new Protocols.ReqPatchBooksMeta();
+            req2.Request(body1);
+            System.Console.WriteLine("");
+
+            //Protocols.ReqPatchBookMeta req3 = new Protocols.ReqPatchBookMeta();
+
+            //int depth = 0;
+            //Dictionary<string, string> body3 = new Dictionary<string, string>();
+            //foreach (var item in body2)
             //{
-            //    log.AddLog(item.Key + " : " + item.Value.id + ", " + item.Value.seriesId + ", " + item.Value.libraryId);
+            //    if(depth <= 10)
+            //    {
+            //        Interlocked.Increment(ref depth);
+            //        if (!req3.Request(item.Key, item.Value))
+            //            env.logger.AddLog("[Patch Error] BookID :" + item.Key);
+            //        Interlocked.Decrement(ref depth);
+            //    }
+            //    body3.Add(item.Key, item.Value);
             //}
-
-
-            //ArchiveLoader loader = new ArchiveLoader();
-            //SMetaDataAttribute temp = loader.GetInfoFromFile(@"C:\SMB\test.zip");
-            ////string authors = string.Join(",", temp.authors);
-            ////string tags = string.Join (",", temp.tags);
-
-            //log.AddLog(temp.number + ", " + temp.title + ", " + authors + ", " + tags);
+            //System.Console.WriteLine("");
+            // 사용했던 변수들 초기화
 
 #else
 
-
-
-            Window login = new LoginWindow();
-            login.Show();
-
-            RestAPI.ApiSender.Send();
 #endif
         }
     }

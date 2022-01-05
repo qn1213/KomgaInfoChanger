@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
 namespace KomgaInfoChanger
 {

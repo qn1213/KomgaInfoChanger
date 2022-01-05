@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using RestSharp;
+﻿using RestSharp;
 using Newtonsoft.Json.Linq;
 using System.Windows.Media;
 
@@ -9,23 +8,14 @@ namespace KomgaInfoChanger.Protocols
     {
         private const string api = "/api/v1/login/set-cookie";
 
-        public Result_ReqSetCookie response;
-        private Dictionary<string, string> header;
-
         public ReqSetCookie()
         {
             env.basicAuthInfo = Helper.GetBasicAuthBase64(env.info.serverID, env.info.serverPW);
-
-            header = new Dictionary<string, string>();
-            header.Add(env.AUTH_PREFIX_, env.basicAuthInfo);
-
-            response = new Result_ReqSetCookie();
         }
 
         public bool Request()
         {
-            Logger log = Logger.GetInstance;
-            string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, header);
+            string ret = RestAPI.ApiSender.Request(Method.GET, env.info.serverAddr, api, env.GetHeader());
 
             if (string.IsNullOrEmpty(ret))
             {
@@ -45,15 +35,11 @@ namespace KomgaInfoChanger.Protocols
                 System.Console.WriteLine(response.status+"\n"+response.error+"\n"+response.message);
 #endif
                 env.mainWindow.SetColorLoginStatusLamp(Colors.OrangeRed);
+
+                // 에러 났을 경우 그냥 로그에 기록.
+                env.logger.AddLog(obj.ToString());
                 return false;
             }
         }
-    }
-
-    internal class Result_ReqSetCookie
-    {
-        public int status;
-        public string error;
-        public string message;
     }
 }

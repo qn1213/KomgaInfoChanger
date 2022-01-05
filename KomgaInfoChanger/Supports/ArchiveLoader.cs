@@ -7,61 +7,57 @@ namespace KomgaInfoChanger
 {
     internal class ArchiveLoader
     {
-        public SMetaDataAttribute GetInfoFromFile(string path)
-        {
-            SMetaDataAttribute fileAtri = new SMetaDataAttribute();
+        private static string[] Translate = { "number", "artist", "group", "type", "series", "character", "tag", "language" };
 
-            using (FileStream fs = File.OpenRead(path))
+        // path : zip파일들 경로 배열
+        public static Dictionary<string, SMetaDataAttribute> GetInfoFromFile(string[] paths)
+        {         
+            Dictionary<string, SMetaDataAttribute> info = new Dictionary<string, SMetaDataAttribute>();
+            foreach(string path in paths)
             {
-                using (ZipArchive zip = new ZipArchive(fs, ZipArchiveMode.Read))
+                using (FileStream fs = File.OpenRead(path))
                 {
-                    foreach (ZipArchiveEntry entry in zip.Entries)
+                    using (ZipArchive zip = new ZipArchive(fs, ZipArchiveMode.Read))
                     {
-                        if(entry.FullName.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
+                        foreach (ZipArchiveEntry entry in zip.Entries)
                         {
-                            using (StreamReader sr = new StreamReader(entry.Open()))
+                            if (entry.FullName.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                string name = sr.ReadToEnd().Replace("\n\n","\n");
-                                string[] test = name.Split(Environment.NewLine.ToCharArray());
+                                using (StreamReader sr = new StreamReader(entry.Open()))
+                                {
+                                    string reader = sr.ReadToEnd().Replace("\n\n", "\n");
+                                    string[] attributes = reader.Split(Environment.NewLine.ToCharArray());
+                                                                        
+                                    SMetaDataAttribute fileAtri = new SMetaDataAttribute();
+                                    fileAtri.number = GetDictonaryString(attributes[0]);
+                                    fileAtri.artist = GetDic_List(attributes[2]);
+                                    fileAtri.group = GetDic_List(attributes[3]);
+                                    fileAtri.type = GetDictonaryString(attributes[4]);
+                                    fileAtri.series = GetDic_List(attributes[5]);
+                                    fileAtri.character = GetDic_List(attributes[6]);
+                                    fileAtri.tag = GetDic_List(attributes[7]);
+                                    fileAtri.language = GetDictonaryString(attributes[8]);
 
-                                /*
-                                    for(int i = 0; i < test.Length; i++)
-                                    {
-                                        // test[i]\r\n UI 호출해서 뿌려주면됨
-                                    }
-                                */                                
-                                
-                                //fileAtri.number = GetString(test[0]);
-                                //fileAtri.title = GetString(test[1]);                                
-                                //fileAtri.atrist = GetArrayString(test[2]);
-                                //fileAtri.group = GetArrayString(test[3]);
-                                //fileAtri.type = GetString(test[4]);
-                                //fileAtri.series = GetArrayString(test[5]);
-                                //fileAtri.character = GetArrayString(test[6]);
-                                //fileAtri.tag = GetDictonaryString(test[7]);
-                                //fileAtri.language = GetString(test[8]);
-
-                                return fileAtri;
+                                    string titles = Path.GetFileNameWithoutExtension(fs.Name);
+                                    info.Add(titles, fileAtri);
+                                }
+                                break;
                             }
                         }
                     }
                 }
-            } 
+            }
 
-            Dictionary<string, string> testDic = new Dictionary<string, string>();
-            testDic.Add("role", "Lang");
-            testDic.Add("name", "Korean");
-
-            return fileAtri;
+            return info;
         }
 
-        private string GetString(string str)
+        private static string GetString(string str)
         {
             string[] data = str.Split(new string[] { ": " }, StringSplitOptions.None);
             return data[1];
         }
 
-        private string[] GetArrayString(string str)
+        private static string[] GetArrayString(string str)
         {
             string[] data1 = str.Split(new string[] {": "}, StringSplitOptions.None);
             string[] data2 = data1[1].Split(new string[] { ", "}, StringSplitOptions.None);
@@ -69,17 +65,67 @@ namespace KomgaInfoChanger
             return data2;
         }
 
-        private Dictionary<string, string> GetDictonaryString(string str)
+        private static Dictionary<string, string> GetDictonaryString(string str)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
 
             string[] data1 = str.Split(new string[] { ": " }, StringSplitOptions.None);           
             string[] data2 = data1[1].Split(new string[] { ", " }, StringSplitOptions.None);
-            
+
             foreach(string value in data2)
             {
-                data.Add(data1[0], value);
+                switch (data1[0])
+                {
+                    case "갤러리 넘버":
+                        data.Add(Translate[0], value);
+                        break;                   
+                    case "타입":
+                        data.Add(Translate[3], value);
+                        break;                    
+                    case "언어":
+                        data.Add(Translate[7], value);
+                        break;
+                    default:
+                        data.Add(data1[0], value);
+                        break;
+                }
             }
+
+            return data;
+        }
+
+        private static Dictionary<string, List<string>> GetDic_List(string str)
+        {
+            Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
+
+            string[] data1 = str.Split(new string[] { ": " }, StringSplitOptions.None);
+            string[] data2 = data1[1].Split(new string[] { ", " }, StringSplitOptions.None);
+
+            List<string> list = new List<string>();
+            foreach(string value in data2)
+            {
+                list.Add(value);
+            }
+
+            switch(data1[0])
+            {
+                case "작가":
+                    data.Add(Translate[1], list);
+                    break;
+                case "그룹":
+                    data.Add(Translate[2], list);
+                    break;
+                case "시리즈":
+                    data.Add(Translate[4], list);
+                    break;
+                case "캐릭터":
+                    data.Add(Translate[5], list);
+                    break;
+                default:
+                    data.Add(data1[0], list);
+                    break;
+            }
+            
 
             return data;
         }
