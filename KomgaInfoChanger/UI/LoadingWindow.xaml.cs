@@ -10,62 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RestSharp;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace KomgaInfoChanger
 {
-
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Loading.xaml에 대한 상호 작용 논리
+    /// </summary>
+    public partial class LoadingWindow : Window
     {
-        public LoginWindow loginWindow = new LoginWindow();
-        public MainWindow()
+        public LoadingWindow()
         {
             InitializeComponent();
-            
-            LoadingWindow loadingWindow = new LoadingWindow();
-            loadingWindow.Show();
 
             Loaded += Window_Loaded;
             this.mediaElement.MediaEnded += mediaElement_MediaEnded;
-        }
-
-        private void LoginButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (!loginWindow.IsLoaded)
-            {
-                
-                loginWindow = new LoginWindow();
-                loginWindow.Show();
-                
-            }
-            else
-            {
-                loginWindow.Activate();
-            }
-
-            
 
         }
-
-        private void ClickLoadLoginData(object sender, RoutedEventArgs e)
-        {
-            Helper.ReadServerInfo();
-        }
-
-        public void SetColorLoginStatusLamp(Color _color)
-        {
-            LoginStatusLamp.Fill = new SolidColorBrush(_color);
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
 
         #region 윈도우 로드시 처리하기 - Window_Loaded(sender, e) 
         /// <summary>

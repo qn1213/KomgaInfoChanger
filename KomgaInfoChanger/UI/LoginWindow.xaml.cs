@@ -19,6 +19,8 @@ namespace KomgaInfoChanger
     /// </summary>
     public partial class LoginWindow : Window
     {
+        SolidColorBrush color_textfield_Error = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF08585"));
+        SolidColorBrush color_textfield_White = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFFFF"));
         public LoginWindow()
         {
             InitializeComponent();
@@ -27,16 +29,42 @@ namespace KomgaInfoChanger
 
         private void ClickLoginButton(object sender, RoutedEventArgs e)
         {
-            bool isLoginSuccess = Helper.SetServerInfo(xn_protocolCombobox.Text + xn_serverAddr.Text, xn_serverID.Text, xn_serverPW.Password, xn_saveCheck.IsChecked);
-
-            if (isLoginSuccess)
+            if (!IsLoginTextboxEmpty())
             {
-                this.Close();
+                bool isLoginSuccess = Helper.SetServerInfo(xn_protocolCombobox.Text + xn_serverAddr.Text, xn_serverID.Text, xn_serverPW.Password, xn_saveCheck.IsChecked);
+
+                if (isLoginSuccess)
+                {
+                    this.Close();
+                }
             }
+            
         }
         private void ClickTestDataLoad(object sender, RoutedEventArgs e)
         {
             Helper.ReadServerInfo();
+        }
+
+        private bool IsLoginTextboxEmpty()
+        {
+            bool fullWritten = false;
+            if (string.IsNullOrEmpty(xn_serverAddr.Text))
+            {
+                xn_serverAddr.Background = color_textfield_Error;
+                fullWritten = true;
+            }
+            if (string.IsNullOrEmpty(xn_serverID.Text))
+            {
+                xn_serverID.Background = color_textfield_Error;
+                fullWritten = true;
+            }
+            if (string.IsNullOrEmpty(xn_serverPW.Password))
+            {
+                xn_serverPW.Background = color_textfield_Error;
+                fullWritten = true;
+            }
+
+            return fullWritten;
         }
 
         private Button CreateButton(string Name = null, string Tag = null, string Content = null, Double Width = 75, Double Height = 70)
@@ -76,6 +104,23 @@ namespace KomgaInfoChanger
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void xn_serverAddr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            xn_serverAddr.Background = color_textfield_White;
+        }
+
+        private void xn_serverID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            xn_serverID.Background = color_textfield_White;
+
+        }
+
+        private void xn_serverPW_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            xn_serverPW.Background = color_textfield_White;
 
         }
     }

@@ -5,12 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KomgaInfoChanger"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Closed="Window_Closed">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="791*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
         <Button x:Name="LoginButton" Content="로그인" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="LoginButtonClick"/>
         <Ellipse x:Name="LoginStatusLamp" HorizontalAlignment="Left" Height="15" Margin="187,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="15" Fill="OrangeRed"/>
         <Button x:Name="test1" Content="Load login data" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="ClickLoadLoginData"/>
 
 
+        <MediaElement Name="mediaElement"
+            Width="200"
+            Height="200"
+            Stretch="None" 
+            UnloadedBehavior="Manual" />
+        
     </Grid>
 </Window>
