@@ -1,32 +1,316 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KomgaInfoChanger"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="KomgaInfoChanger.LoginWindow"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        x:Class="KomgaInfoChanger.LoginWindow"
         mc:Ignorable="d"
-        SizeToContent="Height"
+        Title="LoginWindow"
+        Height="500"
+        Width="380"
+        SizeToContent="Manual"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
         
-        Title="LoginWindow" Height="351" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown">
 
-    <Grid Margin="20">
-        <Grid  HorizontalAlignment="Center" Height="72" Margin="0,10,0,0" VerticalAlignment="Top" Width="290">
-            <TextBox x:Name="xn_serverAddr" Margin="95,4,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="185" Height="18" VerticalAlignment="Top" TextChanged="xn_serverAddr_TextChanged"/>
-            <TextBox x:Name="xn_serverID" Margin="95,0,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="185" Height="18" VerticalAlignment="Center" TextChanged="xn_serverID_TextChanged"/>
-            <PasswordBox x:Name="xn_serverPW" Margin="95,50,0,4" HorizontalAlignment="Left" Width="185" PasswordChanged="xn_serverPW_PasswordChanged"/>
-            <TextBlock Text="ID" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="22"/>
-            <TextBlock Text="Pass" HorizontalAlignment="Left" Margin="29,51,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="xn_protocolCombobox" HorizontalAlignment="Left" Margin="4,2,0,0" VerticalAlignment="Top" Width="73" SelectionChanged="ComboBox_SelectionChanged" SelectedIndex="0">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+
+
+            <Border CornerRadius="10"
+                    Grid.RowSpan="2">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#7be9f6"
+                                      Offset="0.0" />
+                        <GradientStop Color="#f083da"
+                                      Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                <Image Source="/Resources/Images/logo.png"
+                       Width="80"
+                       RenderOptions.BitmapScalingMode="Fant"/>
+                <TextBlock Text="Sign in"
+                           FontWeight="Light"
+                           FontFamily="helvetica"
+                           FontSize="22"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,10,0,0"/>
+                
+            </StackPanel>
+
+
+
+            <StackPanel Grid.Row="1">
+                
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="HTTPS"
+                               FontFamily="Helvetica"
+                               FontWeight="Light"
+                               FontSize="14"
+                               Foreground="White"
+                               TextAlignment="Center"/>
+                    <ToggleButton x:Name="xn_protocolToggleButton"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Margin="15,0,0,0"
+                                  IsChecked="True">
+                        <ToggleButton.Style>
+                            <Style TargetType="{x:Type ToggleButton}">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="White" Opacity="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <Grid>
+                                                    <iconPacks:PackIconMaterial Kind="ToggleSwitchOffOutline" Width="30" Foreground="White"/>
+                                                    <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+
+                                    </Setter.Value>
+                                </Setter>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="true">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                    <Border Background="{TemplateBinding Background}">
+                                                        <Grid>
+                                                            <iconPacks:PackIconMaterial Kind="ToggleSwitch" Width="30" Foreground="White"/>
+                                                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </ToggleButton.Style>
+
+                    </ToggleButton>
+
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,30,0,0">
+                    <TextBox x:Name="xn_serverAddr"
+                             Text="Server Address"
+                             FontFamily="Helvetica"
+                             FontWeight="Light"
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="235"
+                             HorizontalContentAlignment="Left"
+                             Opacity="0.35"
+                             Height="25"
+                             Margin="63,0,0,0" 
+                             GotFocus="xn_serverAddr_GotFocus" 
+                             LostFocus="xn_serverAddr_LostFocus" TextChanged="xn_serverAddr_TextChanged" />
+                    <iconPacks:PackIconMaterial Kind="Web"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="White" />
+                </StackPanel>
+                <Border Width="250"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5" />
+                
+                
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
+                    <TextBox x:Name="xn_serverID"
+                             Text="Username"
+                             FontFamily="Helvetica"
+                             FontWeight="Light"
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="235"
+                             HorizontalContentAlignment="Left"
+                             Opacity="0.35"
+                             Height="25"
+                             Margin="63,0,0,0" GotFocus="xn_serverID_GotFocus" LostFocus="xn_serverID_LostFocus" TextChanged="xn_serverID_TextChanged" />
+                    <iconPacks:PackIconMaterial Kind="Account"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="White" />
+                </StackPanel>
+                <Border Width="250"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5" />
+
+
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
+                    <PasswordBox x:Name="xn_serverPW"
+                                 Password="Password"
+                                 FontFamily="Helvetica"
+                                 FontWeight="Light"
+                                 FontSize="20"
+                                 HorizontalAlignment="Center"
+                                 Foreground="White"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Width="235"
+                                 HorizontalContentAlignment="Left"
+                                 Opacity="0.35"
+                                 Height="25"
+                                 Margin="63,0,0,0" LostFocus="xn_serverPW_LostFocus" GotFocus="xn_serverPW_GotFocus" PasswordChanged="xn_serverPW_PasswordChanged" />
+                    <iconPacks:PackIconMaterial Kind="FormTextboxPassword"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="White" />
+                    
+                    
+                </StackPanel>
+                <Border Width="250"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5" />
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,15,0,0">
+                    <CheckBox x:Name="xn_saveCheck"
+                              Content="save login"
+                              FontFamily="Helvetica"
+                              FontSize="14"
+                              FontWeight="Normal"
+                              Foreground="White"
+                              HorizontalAlignment="Center"
+
+                              IsChecked="True" />
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,30,0,0"
+                            HorizontalAlignment="Center">
+                    <Button Width="100"
+                            Height="40"
+                            Content="LOGIN"
+                            Style="{DynamicResource modernbutton}" Click="ClickLoginButton"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+
+
+
+
+        </Grid>
+    </Grid>
+
+    <!-- <Grid Margin="20">
+        <Grid  HorizontalAlignment="Center"
+               Height="72"
+               Margin="0,10,0,0"
+               VerticalAlignment="Top"
+               Width="290">
+            <TextBox x:Name="xn_serverAddr"
+                     Margin="95,4,0,0"
+                     TextWrapping="Wrap"
+                     HorizontalAlignment="Left"
+                     Width="185"
+                     Height="18"
+                     VerticalAlignment="Top"
+                     TextChanged="xn_serverAddr_TextChanged" />
+            <TextBox x:Name="xn_serverID"
+                     Margin="95,0,0,0"
+                     TextWrapping="Wrap"
+                     HorizontalAlignment="Left"
+                     Width="185"
+                     Height="18"
+                     VerticalAlignment="Center"
+                     TextChanged="xn_serverID_TextChanged" />
+            <PasswordBox x:Name="xn_serverPW"
+                         Margin="95,50,0,4"
+                         HorizontalAlignment="Left"
+                         Width="185"
+                         PasswordChanged="xn_serverPW_PasswordChanged" />
+            <TextBlock Text="ID"
+                       Margin="30,0,0,0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Width="22" />
+            <TextBlock Text="Pass"
+                       HorizontalAlignment="Left"
+                       Margin="29,51,0,0"
+                       VerticalAlignment="Top" />
+            <ComboBox x:Name="xn_protocolCombobox"
+                      HorizontalAlignment="Left"
+                      Margin="4,2,0,0"
+                      VerticalAlignment="Top"
+                      Width="73"
+                      SelectionChanged="ComboBox_SelectionChanged"
+                      SelectedIndex="0">
                 <System:String>https://</System:String>
                 <System:String>http://</System:String>
             </ComboBox>
         </Grid>
-        <Button Content="Login" Margin="190,101,0,0" HorizontalAlignment="Left" Width="88" Height="29" VerticalAlignment="Top" Click="ClickLoginButton"/>
-        <StackPanel x:Name="xn_stackPanel1" Margin="0,148,0,-5">
-            <Button Content="test dataload" Margin="0,0,0,0" VerticalAlignment="Bottom" Height="68" Background="#FFF3ECEC" Click="ClickTestDataLoad"/>
+        <Button Content="Login"
+                Margin="190,101,0,0"
+                HorizontalAlignment="Left"
+                Width="88"
+                Height="29"
+                VerticalAlignment="Top"
+                Click="ClickLoginButton" />
+        <StackPanel x:Name="xn_stackPanel1"
+                    Margin="0,148,0,-5">
+            <Button Content="test dataload"
+                    Margin="0,0,0,0"
+                    VerticalAlignment="Bottom"
+                    Height="68"
+                    Background="#FFF3ECEC"
+                    Click="ClickTestDataLoad" />
 
         </StackPanel>
-        <CheckBox x:Name="xn_saveCheck" Content="save login" HorizontalAlignment="Left" Height="21" Margin="47,105,0,0" VerticalAlignment="Top" Width="81" IsChecked="True"/>
-    </Grid>
+        <CheckBox x:Name="xn_saveCheck"
+                  Content="save login"
+                  HorizontalAlignment="Left"
+                  Height="21"
+                  Margin="47,105,0,0"
+                  VerticalAlignment="Top"
+                  Width="81"
+                  IsChecked="True" />
+    </Grid> -->
 </Window>

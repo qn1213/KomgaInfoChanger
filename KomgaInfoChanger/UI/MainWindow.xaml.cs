@@ -26,11 +26,11 @@ namespace KomgaInfoChanger
         {
             InitializeComponent();
             
-            LoadingWindow loadingWindow = new LoadingWindow();
-            loadingWindow.Show();
+            //LoadingWindow loadingWindow = new LoadingWindow();
+            //loadingWindow.Show();
 
             Loaded += Window_Loaded;
-            this.mediaElement.MediaEnded += mediaElement_MediaEnded;
+            //this.mediaElement.MediaEnded += mediaElement_MediaEnded;
         }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e)
@@ -58,7 +58,7 @@ namespace KomgaInfoChanger
 
         public void SetColorLoginStatusLamp(Color _color)
         {
-            LoginStatusLamp.Fill = new SolidColorBrush(_color);
+            //LoginStatusLamp.Fill = new SolidColorBrush(_color);
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -76,8 +76,8 @@ namespace KomgaInfoChanger
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri("Resources/Spin.gif", UriKind.RelativeOrAbsolute);
-            this.mediaElement.Source = uri;
-            this.mediaElement.Play();
+            //this.mediaElement.Source = uri;
+            //this.mediaElement.Play();
         }
         #endregion
 
@@ -89,9 +89,17 @@ namespace KomgaInfoChanger
         /// <param name="e">이벤트 인자</param>
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            this.mediaElement.Position = new TimeSpan(0, 0, 1); this.mediaElement.Play();
+            //this.mediaElement.Position = new TimeSpan(0, 0, 1); this.mediaElement.Play();
         }
         #endregion
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
 
     }
 }

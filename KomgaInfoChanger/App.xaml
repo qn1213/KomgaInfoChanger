@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:KomgaInfoChanger"
              Startup="ApplicationStart">
     <Application.Resources>
-         
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/modernbuttontheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+        
     </Application.Resources>
 </Application>

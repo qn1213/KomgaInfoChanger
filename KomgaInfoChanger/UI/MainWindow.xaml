@@ -3,25 +3,209 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KomgaInfoChanger"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Closed="Window_Closed">
+        Title="MainWindow"
+        Height="500" Width="900"
+        Background="#181735"
+        Closed="Window_Closed"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="791*"/>
-            <ColumnDefinition Width="9*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="LoginButton" Content="로그인" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="LoginButtonClick"/>
-        <Ellipse x:Name="LoginStatusLamp" HorizontalAlignment="Left" Height="15" Margin="187,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="15" Fill="OrangeRed"/>
-        <Button x:Name="test1" Content="Load login data" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="ClickLoadLoginData"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#0f0f2d"
+              Grid.Row="0"
+              Grid.ColumnSpan="2"
+              MouseDown="Grid_MouseDown">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="BunnyCo"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="/Resources/Fonts/#Dosis"
+                       FontWeight="Medium"
+                       Foreground="White" />
+
+            <TextBlock Text="Menu"
+                       Grid.Column="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="/Resources/Fonts/#Dosis"
+                       Foreground="LightGray" />
+
+            <TextBlock Text="Website"
+                       Grid.Column="3"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="/Resources/Fonts/#Dosis"
+                       Foreground="LightGray" />
+
+            <Button Content="Start" 
+                    FontSize="10" 
+                    FontWeight="Medium" 
+                    Foreground="White" 
+                    Margin="0,0,10,0" 
+                    Grid.Column="12" 
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource ministartbutton}"/>
+
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Center"
+                    Margin="60">
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,20">
+                    <Image Width="50"
+                           Height="50"
+                           Source="/Resources/Images/logo.png" 
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                    <TextBlock Text="KomgaInfoChanger"
+                               VerticalAlignment="Center"
+                               FontFamily="/Resources/Fonts/#Dosis"
+                               FontSize="20"
+                               FontWeight="Medium"
+                               Foreground="White" 
+                               Margin="10,0,0,0"/>
+                </StackPanel>
+
+                <TextBlock Text="Customize"
+                           FontFamily="/Resources/Fonts/#Dosis"
+                           FontSize="25"
+                           FontWeight="Medium"
+                           Foreground="White" />
+
+                <TextBlock Text="Your"
+                           FontFamily="/Resources/Fonts/#Dosis"
+                           FontSize="25"
+                           FontWeight="Medium"
+                           Foreground="White" />
+
+                <TextBlock Text="Experience"
+                           FontFamily="/Resources/Fonts/#Dosis"
+                           FontSize="25"
+                           FontWeight="Medium"
+                           Foreground="White" />
+
+                <TextBlock  Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                            FontFamily="/Resources/Fonts/#Dosis"
+                            FontSize="12"
+                            FontWeight="Medium"
+                            Foreground="White"
+                            TextWrapping="Wrap"
+                            Margin="0,10,0,0" />
+            </StackPanel>
+
+            <StackPanel Margin="0,15,0,0"
+                        Orientation="Horizontal">
+                <Button Content="Start"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Foreground="White"
+                        Margin="0,0,10,0"
+                        Style="{DynamicResource startbutton}"/>
+
+                <Button Content="Login"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Foreground="White"
+                        Style="{DynamicResource registerbutton}"
+                        Click="LoginButtonClick"/>
+
+
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Column="1"
+              Grid.RowSpan="2"
+              Margin="160, -365, -610, 85"
+              Panel.ZIndex="-1">
+
+            <Grid.RenderTransform>
+                <RotateTransform Angle="50" />
+            </Grid.RenderTransform>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="-350, 250, -255, -256">
+
+                <StackPanel>
+                    <Border Width="700"
+                            Height="35"
+                            Background="#3DDDC2"
+                            Margin="150,0,0,0"
+                            CornerRadius="20" />
+                    <Border Width="700"
+                            Height="35"
+                            Background="#FC6586"
+                            Margin="0,15,0,0"
+                            CornerRadius="20" />
+                    <Border Width="700"
+                            Height="35"
+                            Background="#383660"
+                            Margin="75,15,0,0"
+                            CornerRadius="20" />
+                </StackPanel>
+
+                <StackPanel>
+                    <Border Width="700"
+                            Height="35"
+                            Background="#3DDDC2"
+                            Margin="150,0,0,0"
+                            CornerRadius="20" />
+                    <Border Width="700"
+                            Height="35"
+                            Background="#FC6586"
+                            Margin="0,15,0,0"
+                            CornerRadius="20" />
+                    <Border Width="700"
+                            Height="35"
+                            Background="#383660"
+                            Margin="75,15,0,0"
+                            CornerRadius="20" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="791*" />
+            <ColumnDefinition Width="9*" />
+        </Grid.ColumnDefinitions>-->
+
+        <!--<Button x:Name="LoginButton" Content="로그인" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="LoginButtonClick" />
+        <Ellipse x:Name="LoginStatusLamp" HorizontalAlignment="Left" Height="15" Margin="187,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="15" Fill="OrangeRed" />
+        <Button x:Name="test1" Content="Load login data" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Height="50" Width="150" Click="ClickLoadLoginData" />
 
         <MediaElement Name="mediaElement"
             Width="200"
             Height="200"
-            Stretch="None" 
-            UnloadedBehavior="Manual" />
-        
+            Stretch="None"
+            UnloadedBehavior="Manual" />-->
     </Grid>
 </Window>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using KomgaInfoChanger.UI;
 
 namespace KomgaInfoChanger
 {
@@ -19,19 +20,42 @@ namespace KomgaInfoChanger
     /// </summary>
     public partial class LoginWindow : Window
     {
-        SolidColorBrush color_textfield_Error = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF08585"));
-        SolidColorBrush color_textfield_White = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFFFF"));
+        //SolidColorBrush color_textfield_Error = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF08585"));
+        SolidColorBrush color_textfield_Error = UiUtils.BrushFromColorCode("#FFF08585");
+        SolidColorBrush color_textfield_Normal = UiUtils.BrushFromColorCode("#FFFFFFFF");
+
+        //ui default values
+        string tbx_default_addr;
+        string tbX_default_account;
+        string tbx_default_password;
+        Brush color_tbxBackground_default;
+        double color_tbxOpacity_default;
+
         public LoginWindow()
         {
             InitializeComponent();
             CreateButton(null,null, "test");
         }
-
-        private void ClickLoginButton(object sender, RoutedEventArgs e)
+        protected override void OnInitialized(EventArgs e)
         {
+            base.OnInitialized(e);
+            tbx_default_addr = xn_serverAddr.Text;
+            tbX_default_account = xn_serverID.Text;
+            tbx_default_password = xn_serverPW.Password;
+            color_tbxBackground_default = xn_serverAddr.Background;
+            color_tbxOpacity_default = xn_serverAddr.Opacity;
+        }
+
+            private void ClickLoginButton(object sender, RoutedEventArgs e)
+        {
+            string protocol = "http://";
+            if (xn_protocolToggleButton.IsChecked ?? false)
+            {
+                protocol = "https://";
+            }
             if (!IsLoginTextboxEmpty())
             {
-                bool isLoginSuccess = Helper.SetServerInfo(xn_protocolCombobox.Text + xn_serverAddr.Text, xn_serverID.Text, xn_serverPW.Password, xn_saveCheck.IsChecked);
+                bool isLoginSuccess = Helper.SetServerInfo(protocol + xn_serverAddr.Text, xn_serverID.Text, xn_serverPW.Password, xn_saveCheck.IsChecked);
 
                 if (isLoginSuccess)
                 {
@@ -45,20 +69,21 @@ namespace KomgaInfoChanger
             Helper.ReadServerInfo();
         }
 
+        
         private bool IsLoginTextboxEmpty()
         {
             bool fullWritten = false;
-            if (string.IsNullOrEmpty(xn_serverAddr.Text))
+            if (string.IsNullOrEmpty(xn_serverAddr.Text) || xn_serverAddr.Text == tbx_default_addr )
             {
                 xn_serverAddr.Background = color_textfield_Error;
                 fullWritten = true;
             }
-            if (string.IsNullOrEmpty(xn_serverID.Text))
+            if (string.IsNullOrEmpty(xn_serverID.Text) || xn_serverID.Text == tbX_default_account )
             {
                 xn_serverID.Background = color_textfield_Error;
                 fullWritten = true;
             }
-            if (string.IsNullOrEmpty(xn_serverPW.Password))
+            if (string.IsNullOrEmpty(xn_serverPW.Password) || xn_serverPW.Password == tbx_default_password )
             {
                 xn_serverPW.Background = color_textfield_Error;
                 fullWritten = true;
@@ -66,7 +91,7 @@ namespace KomgaInfoChanger
 
             return fullWritten;
         }
-
+        
         private Button CreateButton(string Name = null, string Tag = null, string Content = null, Double Width = 75, Double Height = 70)
         {
             // 버튼 생성
@@ -98,31 +123,90 @@ namespace KomgaInfoChanger
             */
             btn.VerticalAlignment = VerticalAlignment.Top;
             btn.Margin = new Thickness(0);
-            xn_stackPanel1.Children.Add(btn);
+            //xn_stackPanel1.Children.Add(btn);
             return btn;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
+
 
         private void xn_serverAddr_TextChanged(object sender, TextChangedEventArgs e)
         {
-            xn_serverAddr.Background = color_textfield_White;
+            xn_serverAddr.Background = color_tbxBackground_default;
+            xn_serverAddr.Foreground = Brushes.White;
+            xn_serverAddr.Opacity = 1;
         }
-
         private void xn_serverID_TextChanged(object sender, TextChangedEventArgs e)
         {
-            xn_serverID.Background = color_textfield_White;
-
+            xn_serverID.Background = color_tbxBackground_default;
+            xn_serverID.Opacity = 1;
         }
-
         private void xn_serverPW_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            xn_serverPW.Background = color_textfield_White;
-
+            xn_serverPW.Background = color_tbxBackground_default;
+            xn_serverPW.Opacity = 1;
         }
+
+
+        private void xn_serverAddr_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (xn_serverAddr.Text.Equals(tbx_default_addr))
+            {
+                xn_serverAddr.Clear();
+            }
+        }
+        private void xn_serverID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (xn_serverID.Text.Equals(tbX_default_account))
+            {
+                xn_serverID.Clear();
+            }
+        }
+        private void xn_serverPW_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (xn_serverPW.Password.Equals(tbx_default_password))
+            {
+                xn_serverPW.Clear();
+            }
+        }
+
+
+        private void xn_serverAddr_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(xn_serverAddr.Text))
+            {
+                xn_serverAddr.Text = tbx_default_addr;
+                xn_serverAddr.Opacity = color_tbxOpacity_default;
+            }
+        }
+        private void xn_serverID_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(xn_serverID.Text))
+            {
+                xn_serverID.Text = tbX_default_account;
+                xn_serverID.Opacity = color_tbxOpacity_default;
+            }
+        }
+        private void xn_serverPW_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(xn_serverPW.Password))
+            {
+                xn_serverPW.Password = tbx_default_password;
+                xn_serverPW.Opacity = color_tbxOpacity_default;
+            }
+        }
+
+
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+
     }
 
 
